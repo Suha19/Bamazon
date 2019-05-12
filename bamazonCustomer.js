@@ -16,33 +16,33 @@ var connection = mysql.createConnection({
   connection.connect(function(err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId);
-    // afterConnection();
-    // start();
-    console.log("hi")
-    customerPurches();
+    displayProducts(); 
+    start();
   });
-  // connection.end();
-//   function start() {
-//   inquirer
-//     .prompt({
-//       name: "postOrBid",
-//       type: "list",
-//       message: "Please enter the [ID] of the product you want to buy and the [quantity] of the product you need?",
-//       choices: ["ID", "QUANTITY", "EXIT"]
-//     })
-//     .then(function(answer) {
-//       // based on their answer, either call the bid or the post functions
-//       if (answer.idOrQuantity === ID) {
-//         console.log(ID)
-//         buyPrudect();
-//       }
-//       else{
-//         connection.end();
-//       }
-//     });
-// }
-function customerPurches() {
-  // prompt for info about the item being put up for auction
+  
+  function start() {
+     
+    inquirer
+      .prompt({
+        name: "customerChoice",
+        type: "list",
+        message: "Would you like to buy something?",
+        choices: ["Buy", "Exit"]
+      })
+      .then(function(answer) {
+        // based on their answer, either call the buy or exit
+        if (answer.customerChoice === "Buy") {
+          customerBuy();
+        }else{
+          connection.end();
+        }
+      });
+  
+  }
+
+function customerBuy() {
+  
+  // prompt for info about what item the customer wants to buy
   inquirer
     .prompt([
       {
@@ -54,31 +54,33 @@ function customerPurches() {
       {
         name: "quantity",
         type: "input",
-        message: "How many of this item you need to?"
-        // validate: function(value) {
-        //   if (isNaN(value) === false) {
-        //     return true;
-        //   }
-        //   return false;
-        // }
+        message: "How many of this item you need to buy?"
+        
       }
     ])
     .then(function(answer) {
-      // when finished prompting, insert a new item into the db with that info
-      // connection.query(
-      //   "INSERT INTO auctions SET ?",
-      //   {
-      //     item_name: answer.item,
-      //     category: answer.category,
-      //     starting_bid: answer.startingBid || 0,
-      //     highest_bid: answer.startingBid || 0
-      //   },
-      //   function(err) {
-      //     if (err) throw err;
-      //     console.log("Your auction was created successfully!");
-      //     // re-prompt the user for if they want to bid or post
-      //     start();
-      //   }
-      // );
+     
     });
 }
+// function deleteProduct() {
+//   console.log("Deleting all strawberry icecream...\n");
+//   connection.query(
+//     "DELETE FROM products WHERE ?",
+//     {
+//       flavor: "strawberry"
+//     },
+//     function(err, res) {
+//       console.log(res.affectedRows + " products deleted!\n");
+//       // Call readProducts AFTER the DELETE completes
+//       readProducts();
+//     }
+//   );
+// }
+function displayProducts() {
+  connection.query("SELECT * FROM products", function(err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
+}
+
+
