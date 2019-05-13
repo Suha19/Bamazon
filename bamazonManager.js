@@ -15,7 +15,6 @@ var connection = mysql.createConnection({
 });
 connection.connect(function (err) {
     if (err) throw err;
-    console.log("connected as id " + connection.threadId);
     start();
 });
 
@@ -43,15 +42,27 @@ function start() {
             }
         });
 }
-// viewProducts(){
-//     console.log("viewProducts")
-// }
-// viewLowInventory(){
-//     console.log("viewLowInventory")
-// }
-// addInventory(){
-//     console.log("addInventory")
-// }
-// addProduct(){
-//     console.log("addProduct")
-// }
+function viewProducts(){
+    connection.query("SELECT * FROM products", function (err, result) {
+        if (err) throw err;
+        console.log(result);
+    start();    
+    });
+}
+function viewLowInventory(){
+    connection.query("SELECT  FROM products WHERE ", 
+            [
+              {
+                stockQuantity: 5
+              }
+            ],
+            function (err, result) {  
+                if (err) throw err;
+    });
+}
+function addInventory(){
+    console.log("addInventory")
+}
+function addProduct(){
+    console.log("addProduct")
+}
