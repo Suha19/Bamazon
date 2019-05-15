@@ -66,7 +66,7 @@ function customerBuy() {
           if (err) throw err;
           let newQuantity = (products.stockQuantity - answer.quantity);
           console.log(`${result.id} |${result.productName} | ${result.departmentName} | ${result.price} | ${newQuantity}`);
-          console.log("Your purchase was successful!");
+          console.log("Your purchase was made successfully!");
           start();
       }
   );

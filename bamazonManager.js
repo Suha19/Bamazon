@@ -45,9 +45,11 @@ function viewProducts() {
         if (err) throw err;
         // console.log(result);
         result.forEach(result => {
-            console.log(`${result.id} |${result.productName} | ${result.departmentName} | ${result.price} | ${result.stockQuantity}`);
+            console.log(`\n${result.id} |${result.productName} | ${result.departmentName} | ${result.price} | ${result.stockQuantity}`);
         });
+        start();
     });
+
 }
 
 
@@ -63,6 +65,7 @@ function viewLowInventory() {
         } else {
             console.log("you do not have low inventory!")
         }
+        start();
     });
 }
 
@@ -86,12 +89,12 @@ function addInventory() {
                 function (err) {
                     if (err) throw err;
                     let newQuantity = (products.stockQuantity + answer.quantity);
-                    console.log(`${result.id} |${result.productName} | ${result.departmentName} | ${result.price} | ${newQuantity}`);
+                    console.log(`\n${result.id} |${result.productName} | ${result.departmentName} | ${result.price} | ${newQuantity}`);
                     console.log("Your add Inventory was successful!");
-                    start();
                 }
             );
         });
+    start();
 }
 
 function addProduct() {
@@ -130,8 +133,8 @@ function addProduct() {
                 function (err) {
                     if (err) throw err;
                     console.log("Your Item was added successfully!");
-                    start();
                 }
             );
         });
+    start();
 }
