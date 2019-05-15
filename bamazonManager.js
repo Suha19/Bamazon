@@ -45,25 +45,25 @@ function viewProducts() {
         if (err) throw err;
         // console.log(result);
         result.forEach(result => {
-          console.log(`${result.id} |${result.productName} | ${result.departmentName} | ${result.price} | ${result.stockQuantity}`);
+            console.log(`${result.id} |${result.productName} | ${result.departmentName} | ${result.price} | ${result.stockQuantity}`);
         });
-        });
+    });
 }
 
 
 function viewLowInventory() {
     const minStockQuantity = 5;
-        connection.query("SELECT * FROM products", function (err, result) {
-            if (result.stockQuantity < minStockQuantity) {
+    connection.query("SELECT * FROM products", function (err, result) {
+        if (result.stockQuantity < minStockQuantity) {
             if (err) throw err;
             result.forEach(result => {
                 console.log(`${result.id} |${result.productName} | ${result.departmentName} | ${result.price} | ${result.stockQuantity}`);
             });
-        
-    } else {
-        console.log("you do not have low inventory!")
-    }
-});
+
+        } else {
+            console.log("you do not have low inventory!")
+        }
+    });
 }
 
 function addInventory() {
@@ -80,7 +80,9 @@ function addInventory() {
             }
         ])
         .then(function (answer) {
-            connection.query("UPDATE products SET WHERE ?", { products: answer.itemID },
+            connection.query("UPDATE products SET WHERE ?", {
+                    products: answer.itemID
+                },
                 function (err) {
                     if (err) throw err;
                     let newQuantity = (products.stockQuantity + answer.quantity);
