@@ -15,15 +15,18 @@ var connection = mysql.createConnection({
 });
 connection.connect(function (err) {
   if (err) throw err;
-  console.log("connected as id " + connection.threadId);
+  // console.log("connected as id " + connection.threadId);
   start();
 });
 
 function start() {
   connection.query("SELECT * FROM products", function (err, result) {
     if (err) throw err;
-    console.log(result);
-  inquirer
+    // console.log(result);
+    result.forEach(result => {
+      console.log(`${result.id} |${result.productName} | ${result.departmentName} | ${result.price} | ${result.stockQuantity}`);
+    });
+      inquirer
     .prompt({
       name: "customerChoice",
       type: "list",
@@ -44,42 +47,30 @@ function start() {
 function customerBuy() {
   // prompt for info about what item the customer wants to buy
   inquirer
-    .prompt([{
+    .prompt([
+      {
         name: "itemID",
         type: "input",
         message: "Please enter the ID of the item you would like to buy :"
       },
-
       {
         name: "quantity",
         type: "input",
         message: "Please enter the quantity you need :"
-
-      }
-      
+      }     
     ])
     .then(function (answer) {
-      connection.query(
-        "UPDATE products WHERE id = answer.itemID ?",
-        {
-         
-          // if (answer.quantity < stockQuantity){
-          // stockQuantity: stockQuantity-answer.quantity
-          // console.log("Your purchase was made successfully!");
-          // start();
-          // }else{
-          //   console.log("Insufficient quantity!")
-          //   connection.end();
-          // }
-        },
-        function(err) {
+    
+      connection.query("UPDATE products SET WHERE ?", { products: answer.itemID },
+      function (err) {
           if (err) throw err;
-          
-          // re-prompt the user for if they want to do another purchase
-          
-        }
-      );
-    });
-}
+          let newQuantity = (products.stockQuantity - answer.quantity);
+          console.log(`${result.id} |${result.productName} | ${result.departmentName} | ${result.price} | ${newQuantity}`);
+          console.log("Your purchase was successful!");
+          start();
+      }
+  );
+});
+  }
 
 
