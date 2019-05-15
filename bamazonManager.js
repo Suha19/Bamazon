@@ -94,3 +94,44 @@ function addInventory() {
         });
 }
 
+function addProduct() {
+
+    inquirer
+        .prompt([{
+                name: "itemName",
+                type: "input",
+                message: "What is your new product?"
+            },
+            {
+                name: "depName",
+                type: "input",
+                message: "What is the prand of your new product?"
+            },
+            {
+                name: "itemPrice",
+                type: "input",
+                message: "What would be the price ?",
+            },
+            {
+                name: "itemQuantity",
+                type: "input",
+                message: "How many of this item do you have ?",
+            }
+        ])
+        .then(function (answer) {
+            // when finished prompting, insert a new item into the db with that info
+            connection.query(
+                "INSERT INTO products ?", {
+                    productName: answer.itemName,
+                    departmentName: answer.depName,
+                    price: answer.itemPrice,
+                    stockQuantity: answer.itemQuantity
+                },
+                function (err) {
+                    if (err) throw err;
+                    console.log("Your Item was added successfully!");
+                    start();
+                }
+            );
+        });
+}
