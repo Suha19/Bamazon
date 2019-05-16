@@ -16,7 +16,6 @@ connection.connect(function (err) {
 });
 
 function start() {
-
     inquirer
         .prompt({
             name: "managerChoice",
@@ -44,11 +43,10 @@ function viewProducts() {
     connection.query("SELECT * FROM products", function (err, result) {
         if (err) throw err;
         result.forEach(result => {
-            console.log(`\n${result.id} |${result.productName} | ${result.departmentName} | ${result.price} | ${result.stockQuantity}`);
+            console.log(`${result.id} |${result.productName} | ${result.departmentName} | ${result.price} | ${result.stockQuantity}`);
         });
         start();
     });
-
 }
 
 
@@ -90,17 +88,12 @@ function addInventory() {
                         console.log("\nYour add inventory was made successfully")
                         console.log("Your new quantity is  :", newQuantity);
                         start();
-                    })
-                    
-                    
-                });
-               
-        });
-        
+                    })    
+                });       
+        });        
 }
 
 function addProduct() {
-
     inquirer
         .prompt([{
                 name: "itemName",
@@ -139,5 +132,4 @@ function addProduct() {
                 }
             );
         });
-
 }

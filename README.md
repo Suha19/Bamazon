@@ -17,15 +17,15 @@
 
 # Bamazon Manager:
 * When running bamazonManager.js. The application will prompt options:
-![image](https://user-images.githubusercontent.com/47680905/57798674-e664e780-7712-11e9-9f0f-c5212f094c01.png)
+![image](https://user-images.githubusercontent.com/47680905/57824728-a547f400-7761-11e9-9d96-9f7a7c43426a.png)
 
   * View Products for Sale : If a manager selects View Products for Sale, the app should list every available item:    the item IDs, names, prices, and quantities.
-![image](https://user-images.githubusercontent.com/47680905/57798674-e664e780-7712-11e9-9f0f-c5212f094c01.png)
+![image](https://user-images.githubusercontent.com/47680905/57824784-e17b5480-7761-11e9-9113-ea5fdc4396ac.png)
 
   * View Low Inventory : If a manager selects View Low Inventory, then it should list all items with an inventory     count lower than five.
 ![image](https://user-images.githubusercontent.com/47680905/57823898-cce98d00-775e-11e9-8316-b57ad4dacbc1.png)
 
-  * Add to Inventory : If a manager selects Add to Inventory, your app should display a prompt that will let the      manager "add more" of any item currently in the store.
+  * Add to Inventory : If a manager selects Add to Inventory, the app should display a prompt that will let the      manager "add more" of any item currently in the store.
 ![image](https://user-images.githubusercontent.com/47680905/57824302-47ff7300-7760-11e9-82e7-afb1a30a666b.png)
 
   * Add New Product : If a manager selects Add New Product, it should allow the manager to add a completely new      product to the store.
