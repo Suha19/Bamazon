@@ -43,7 +43,6 @@ function start() {
 function viewProducts() {
     connection.query("SELECT * FROM products", function (err, result) {
         if (err) throw err;
-        // console.log(result);
         result.forEach(result => {
             console.log(`\n${result.id} |${result.productName} | ${result.departmentName} | ${result.price} | ${result.stockQuantity}`);
         });
@@ -55,16 +54,11 @@ function viewProducts() {
 
 function viewLowInventory() {
     const minStockQuantity = 5;
-    connection.query("SELECT * FROM products", function (err, result) {
-        if (result.stockQuantity < minStockQuantity) {
-            if (err) throw err;
-            result.forEach(result => {
-                console.log(`${result.id} |${result.productName} | ${result.departmentName} | ${result.price} | ${result.stockQuantity}`);
-            });
-
-        } else {
-            console.log("you do not have low inventory!")
-        }
+    connection.query("SELECT * FROM products WHERE stockQuantity <=? ", [minStockQuantity], function (err, results) {
+        if (err) throw err;
+        results.forEach(result => {
+            console.log(`${result.id} |${result.productName} | ${result.departmentName} | ${result.price} | ${result.stockQuantity}`);
+        });
         start();
     });
 }
@@ -83,18 +77,26 @@ function addInventory() {
             }
         ])
         .then(function (answer) {
-            connection.query("UPDATE products SET WHERE ?", {
-                    products: answer.itemID
+            connection.query("SELECT * FROM  products WHERE  ?", {
+                    id: answer.itemID
                 },
-                function (err) {
+                function (err, res) {
                     if (err) throw err;
-                    let newQuantity = (products.stockQuantity + answer.quantity);
-                    console.log(`\n${result.id} |${result.productName} | ${result.departmentName} | ${result.price} | ${newQuantity}`);
-                    console.log("Your add Inventory was successful!");
-                }
-            );
+                    let newQuantity = res[0].stockQuantity + parseInt(answer.quantity);
+                    connection.query("UPDATE products SET stockQuantity=? WHERE id =?", [
+                        newQuantity, answer.itemID
+                    ], function (err) {
+                        if (err) throw err;
+                        console.log("\nYour add inventory was made successfully")
+                        console.log("Your new quantity is  :", newQuantity);
+                        start();
+                    })
+                    
+                    
+                });
+               
         });
-    start();
+        
 }
 
 function addProduct() {
@@ -124,17 +126,18 @@ function addProduct() {
         .then(function (answer) {
             // when finished prompting, insert a new item into the db with that info
             connection.query(
-                "INSERT INTO products ?", {
-                    productName: answer.itemName,
-                    departmentName: answer.depName,
-                    price: answer.itemPrice,
-                    stockQuantity: answer.itemQuantity
-                },
+                "INSERT INTO products (productName, departmentName, price, stockQuantity) VALUES (?, ?, ?, ?) ", [
+                    answer.itemName,
+                    answer.depName,
+                    answer.itemPrice,
+                    answer.itemQuantity
+                ],
                 function (err) {
                     if (err) throw err;
                     console.log("Your Item was added successfully!");
+                    start();
                 }
             );
         });
-    start();
+
 }
