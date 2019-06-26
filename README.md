@@ -1,6 +1,8 @@
 # Bamazon
 * Bamazon app is an Amazon-like storefront. Using MySQL the app will take in orders from customers and deplete        stock from the store's inventory. 
 
+ https://github.com/Suha19/Bamazon
+
 # Bamazon SQL:
 * On bamazon DB I have products table contain the following columns:
 ![image](https://user-images.githubusercontent.com/47680905/57798433-5888fc80-7712-11e9-8f3d-3fe2bdb99222.png)
